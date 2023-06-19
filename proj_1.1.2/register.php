@@ -34,18 +34,24 @@
 <body>
 	<!-- header section start-->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="logo" href="#"><img src="images/logo.png"></a>
+        <a class="logo" href="general.php"><img src="images/logo.png"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
+               
+               <style>
+                .nav-link:hover {
+                  color: rgb(7, 190, 135)
+                }
+              </style>  
               <li class="nav-item">
                 <a class="nav-link" href="general.php">Home</a>
-             </li>
-              <li class="nav-item">
-                <a class="nav-link" href="register.html">Sign up</a>
-             </li>
+             </li>             
+                   <a class="nav-link" href="login.php">Sign in</a>
+                  </li>
+                  <li class="nav-item">
                 <li class="nav-item">
                    <a class="nav-link" href="#">About us</a>
                 </li>
@@ -63,7 +69,7 @@
      <div class="card card-signin my-5" style="background-color: rgba(172, 168, 168, 0.082); ">
       <div class="card-body">
        <div class="card-body">
-         <h5 class="card-title text-center"  style="color: rgb(98, 107, 104); ">Sign in</h5>
+         <h5 class="card-title text-center"  style="color: rgb(98, 107, 104); ">Create account</h5>
          <form class="form-signin">
            <div class="form-label-group">
              <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
@@ -71,18 +77,58 @@
            </div>
 
            
-
-           <div class="form-label-group">
-             <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-             <label for="inputPassword">Password</label>
-           </div>
-
-           <br>
+           <style>
+            .match-error {
+              color: red;
+            }
+          
+            .match-success {
+              color: rgb(0, 255, 0);
+            }
+          </style>
+          
+          <div class="form-label-group">
+            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+            <label for="inputPassword">Password</label>
+          </div>
+          
+          <div class="form-label-group">
+            <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm Password" required>
+            <label for="confirmPassword">Confirm password</label>
+            <span id="passwordMatch" style="font-weight: bold;"></span>
+          </div>
+          <br>
+          
           <form class="form-signin" action="index.html">
-            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" style="background-color: rgb(7, 190, 135);">sign in </button>
+            <button id="signupButton" class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" style="background-color: rgb(7, 190, 135);" disabled>Sign Up</button>
           </form>
+          
+          <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+          <script>
+            $(document).ready(function() {
+              var signupButton = $('#signupButton');
+              var passwordMatchElement = $('#passwordMatch');
+          
+              $('#inputPassword, #confirmPassword').on('input', function() {
+                var password = $('#inputPassword').val();
+                var confirmPassword = $('#confirmPassword').val();
+          
+                if (password !== confirmPassword) {
+                  passwordMatchElement.text('*');
+                  passwordMatchElement.removeClass('match-success').addClass('match-error');
+                  signupButton.prop('disabled', true);
+                } else {
+                  passwordMatchElement.text('*');
+                  passwordMatchElement.removeClass('match-error').addClass('match-success');
+                  signupButton.prop('disabled', false);
+                }
+              });
+            });
+          </script>
+          
 
           <br>
+           
           <style>
             .nav-link:hover {
               color: rgb(7, 190, 135)
@@ -90,7 +136,7 @@
             </style>
           <div style="text-align: center;">
             
-            <a  class="nav-link" href="register.html">create account here</a>
+            <a  class="nav-link" href="login.php">already have an account?</a>
           </div>
           <hr class="my-4">
 

@@ -34,7 +34,7 @@
 <body>
 	<!-- header section start-->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="logo" href="#"><img src="images/logo.png"></a>
+        <a class="logo" href="login.php"><img src="images/logo.png"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
@@ -42,10 +42,10 @@
             <ul class="navbar-nav">
                 
                 <li class="nav-item">
-                   <a class="nav-link" href="login.html">Sign in</a>
+                   <a class="nav-link" href="login.php">Sign in</a>
                 </li>
                 <li class="nav-item">
-                   <a class="nav-link" href="register.html">Sign up</a>
+                   <a class="nav-link" href="register.php">Sign up</a>
                 </li>
                 <li class="nav-item">
                    <a class="nav-link" href="aboutUs.html">About us</a>
@@ -57,15 +57,15 @@
 	<!-- header section start-->
 
 	
-	<!-- marketing section start-->
+	<!-- Get to know us-->
 	<div class="marketing_section layout_padding">
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-6">
 					<div class="job_section">
-					    <h1 class="jobs_text">Marketing jobs</h1>
-					    <p class="dummy_text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there</p>
-					    <div class="apply_bt"><a href="#">Apply now</a></div>
+                    <h1 class="jobs_text">Get to know us </h1>
+					    <p class="dummy_text" style="font-size: 20px;">Welcome to Talenteck, the ultimate platform for unlocking your career potential. Whether you're a job seeker looking for exciting opportunities or an employer searching for top talent, Talenteck is here to connect you with the perfect match. Our comprehensive features and user-friendly interface make finding the right job or candidate easier than ever before.</p>
+					    
 					</div>
 				</div>
 				<div class="col-md-6">
@@ -74,62 +74,109 @@
 			</div>
 		</div>
 	</div>
-	<!-- marketing section end-->
-	<!-- Industrial section start-->
+	<!-- Get to know us end-->
+
+
+	<!--Powerful Job Search-->
 	<div class="marketing_section layout_padding">
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-6">
-					<div class="image_1 padding_0"><img src="images/img-2.png"></div>
+					<div class="image_1 padding_0"><img src="images/feature1.jpg"></div>
 				</div>
 				<div class="col-md-6">
 					<div class="job_section_2">
-					    <h1 class="jobs_text">Industrial jobs</h1>
-					    <p class="dummy_text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there</p>
-					    <div class="apply_bt"><a href="#">Apply now</a></div>
+					    <h1 class="jobs_text">1-Powerful Job Search</h1>
+					    <p class="dummy_text" style="font-size: 21px;">With Talenteck, you gain access to an extensive database of job listings from various industries and locations. Our advanced search filters and algorithms ensure that you can quickly find the right job opportunities tailored to your skills, experience, and preferences.</p>
+
+					    
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- Industrial section end-->
-	<!-- Corporate section start-->
+	<!-- Powerful Job Search end-->
+
+
+	<!-- Professional Networking-->
 	<div class="marketing_section layout_padding">
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-6">
 					<div class="job_section">
-					    <h1 class="jobs_text">Corporate jobs</h1>
-					    <p class="dummy_text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there</p>
-					    <div class="apply_bt"><a href="#">Apply now</a></div>
+					    <h1 class="jobs_text">2-Professional Networking</h1>
+					    <p class="dummy_text" style="font-size: 21px;">Build a powerful professional network on Talenteck by connecting with industry experts, thought leaders, and colleagues. Expand your professional circle, exchange knowledge, and explore new career possibilities through networking</p>
+					 
 					</div>
 				</div>
 				<div class="col-md-6 padding_0">
-					<div class="image_1"><img src="images/img-3.png"></div>
+					<div class="image_1"><img src="images/feature2.jpeg"></div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- Corporate section end-->
-	<!-- Government section start-->
+	<!-- Professional Networking end-->
+
+	<!-- Resume builder-->
 	<div class="marketing_section layout_padding">
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-6 padding_0">
-					<div class="image_1"><img src="images/img-4.png"></div>
+					<div class="image_1"><img src="images/feature3.jpg"></div>
 				</div>
 				<div class="col-md-6">
 					<div class="job_section_2">
-					    <h1 class="jobs_text">Government jobs</h1>
-					    <p class="dummy_text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there</p>
-					    <div class="apply_bt"><a href="#">Apply now</a></div>
+					    <h1 class="jobs_text">3-Resume Builder</h1>
+					    <p class="dummy_text" style="font-size: 21px;"> Craft a compelling resume that highlights your strengths and attracts attention from potential employers. Talenteck's intuitive resume builder helps you create professional-looking resumes tailored to specific job applications.</p>
+					  
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- Government section end-->
-	
+	<!-- Resume builder end-->
+
+	<!-- Company profile-->
+	<div class="marketing_section layout_padding">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="job_section">
+					    <h1 class="jobs_text">4-Company Profiles</h1>
+					    <p class="dummy_text" style="font-size: 21px;">Dive into detailed company profiles to gain valuable insights about potential employers. Learn about their mission, values, culture, and employee reviews to make informed decisions about the companies you're interested in..</p>
+					 
+					</div>
+				</div>
+				<div class="col-md-6 padding_0">
+					<div class="image_1"><img src="images/feature4.jpg"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- Company profile end -->
+
+<!-- Conclusion -->
+
+<div class="marketing_section layout_padding">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="job_section">
+					    <h1 class="jobs_text">Conclusion</h1>
+                        <a class="dummy_text" style="font-size: 17px;" href="login.php">Talenteck is your go-to platform for discovering new career opportunities, connecting with professionals, and taking your career to new heights. Sign up for Talenteck now to start exploring the endless possibilities that await you in the world of careers and professional connections.</a>
+
+					 
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+<!-- Conclusion end-->
+
+
+
+
 	<!-- copyright section start-->
 	<div class="copyright_section">
 		<div class="container">
