@@ -57,7 +57,7 @@
 	<!-- header section start-->
 
 	
-	<!-- Get to know us-->
+	<!-- Get to know us -->
 	<div class="marketing_section layout_padding">
 		<div class="container-fluid">
 			<div class="row">
