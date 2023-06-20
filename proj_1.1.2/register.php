@@ -70,9 +70,12 @@
       <div class="card-body">
        <div class="card-body">
          <h5 class="card-title text-center"  style="color: rgb(98, 107, 104); ">Create account</h5>
-         <form class="form-signin">
+
+
+          <!-- Begin form--> 
+         <form class="form-signin" method="post" action="insert.php">
            <div class="form-label-group">
-             <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+             <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
              <label for="inputEmail">Email address</label>
            </div>
 
@@ -88,7 +91,7 @@
           </style>
           
           <div class="form-label-group">
-            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+            <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
             <label for="inputPassword">Password</label>
           </div>
           
@@ -99,9 +102,9 @@
           </div>
           <br>
           
-          <form class="form-signin" action="index.html">
-            <button id="signupButton" class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" style="background-color: rgb(7, 190, 135);" disabled>Sign Up</button>
-          </form>
+          
+          <button id="signupButton" class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" style="background-color: rgb(7, 190, 135);" disabled>Sign Up</button>
+       
           
           <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
           <script>

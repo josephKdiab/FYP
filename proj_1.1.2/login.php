@@ -64,23 +64,26 @@
       <div class="card-body">
        <div class="card-body">
          <h5 class="card-title text-center"  style="color: rgb(98, 107, 104); ">Sign in</h5>
-         <form class="form-signin">
-           <div class="form-label-group">
-             <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+            
+         <!-- Form login start--> 
+
+         <form class="form-signin" action ="authentication.php" method="POST">
+           <div class="form-label-group"> 
+             <input name="loginemail" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
              <label for="inputEmail">Email address</label>
            </div>
 
            
 
            <div class="form-label-group">
-             <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+             <input name="loginpass" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
              <label for="inputPassword">Password</label>
            </div>
 
            <br>
-          <form class="form-signin" action="index.html">
+          
             <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" style="background-color: rgb(7, 190, 135);">sign in </button>
-          </form>
+          
 
           <br>
           <style>
