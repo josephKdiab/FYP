@@ -3,7 +3,11 @@ session_start();
 if (!isset($_SESSION['EMAIL'])) {
   header("Location: signin.php");
 }
+
+include 'connection.php';
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -55,6 +59,17 @@ if (!isset($_SESSION['EMAIL'])) {
         transform: translateX(0);
       }
     }
+
+    /* Add the following styles to make the Select2 dropdown toggle circular */
+    .select2-container--default .select2-selection--single {
+      border-radius: 100000px;
+      padding: 5px;
+      height: 38px;
+    }
+
+    .select2-selection__arrow {
+      height: 38px;
+    }
   </style>
 </head>
 
@@ -83,7 +98,7 @@ if (!isset($_SESSION['EMAIL'])) {
 
         <div class="card card-signin my-5" style="background-color: rgba(172, 168, 168, 0.082);">
           <div class="card-body">
-            <h5 class="card-title text-center" style="color: rgb(98, 107, 104);">Your profile</h5>
+            <h5 class="card-title text-center" style="color: rgb(98, 107, 104);">personal information</h5>
             <form class="form-signin" method="post" action="profileauthentication.php">
               <div class="form-label-group">
                 <label for="name">Name:</label>
@@ -101,13 +116,58 @@ if (!isset($_SESSION['EMAIL'])) {
                 <label for="female">Female</label>
               </div>
               <div class="form-label-group">
-                <label for="location">Location:</label>
-                <input class="form-control" type="text" name="location" id="location" required>
-              </div>
+
+
               <div class="form-label-group">
                 <label for="dob">Date of Birth:</label>
                 <input class="form-control" type="date" name="dob" id="dob" required>
               </div>
+<!-- show countries -->
+
+
+<div class="form-label-group">
+    <label for="location">Location:</label>
+    <?php
+    // Assuming you have established a database connection
+
+    // Fetch countries from the database
+    $query = "SELECT country FROM countries";
+    $result = mysqli_query($con, $query);
+
+    // Check if query was successful
+    if ($result) {
+        // Start building the select element with the Select2 class
+        echo '<select class="form-control" name="location" id="location" required>';
+    
+        // Iterate over the result set and populate the select options
+        while ($row = mysqli_fetch_assoc($result)) {
+            $country = $row['country'];
+            echo '<option value="' . $country . '">' . $country . '</option>';
+        }
+    
+        // Close the select element
+        echo '</select>';
+    
+        // Free the result set
+        mysqli_free_result($result);
+    } else {
+        // Handle the error if the query fails
+        echo 'Error: ' . mysqli_error($con);
+    }
+
+    // Close the database connection
+    mysqli_close($con);
+    ?>
+</div>
+
+<script>
+// Initialize Select2 on the location dropdown
+$(document).ready(function() {
+    $('#location').select2();
+});
+</script>
+
+
               <br>
               <style>
                 .nav-link:hover {
@@ -121,7 +181,7 @@ if (!isset($_SESSION['EMAIL'])) {
             </form>
           </div>
         </div>
-        
+
 <!-- Fill profile form end -->
       </div>
     </div>
@@ -131,10 +191,18 @@ if (!isset($_SESSION['EMAIL'])) {
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+  <script>
+
+    $(document).ready(function() {
+      $('.animate-paragraph').addClass('animate');
+    });
+  </script>
 
   <script>
     $(document).ready(function() {
-      $('.animate-paragraph').addClass('animate');
+      $('#location').select2();
     });
   </script>
 
