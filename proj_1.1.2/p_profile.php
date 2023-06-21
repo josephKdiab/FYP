@@ -3,6 +3,8 @@ session_start();
 if (!isset($_SESSION['EMAIL'])) {
   header("Location: signin.php");
 }
+
+include 'connection.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -84,38 +86,75 @@ if (!isset($_SESSION['EMAIL'])) {
         <div class="card card-signin my-5" style="background-color: rgba(172, 168, 168, 0.082);">
           <div class="card-body">
             <h5 class="card-title text-center" style="color: rgb(98, 107, 104);">professional information</h5>
-            <form class="form-signin" method="post" action="profileauthentication.php">
+            <form class="form-signin" method="post" action="p_profileauthentication.php">
               <div class="form-label-group">
-                <label for="name">Education:</label>
-                <input class="form-control" type="text" name="name" id="name" required>
+                <label for="degree"></label>
+                <select class="form-control" name="degree" id="degree" required>
+                  
+                  <option value="High School">High School</option>
+                  <option value="Bachelor's Degree">Bachelor's Degree</option>
+                  <option value="Master's Degree">Master's Degree</option>
+                  <option value="PhD">PhD</option>
+                  <option value="other">Other</option>
+                  <!-- Add more options as needed -->
+                </select>
+              </div>
+
+
+<div class="form-label-group">
+    <label for="major"></label>
+    <?php
+    // Assuming you have established a database connection
+
+    // Fetch majors from the database
+    $query = "SELECT major FROM education";
+    $result = mysqli_query($con, $query);
+
+    // Check if query was successful
+    if ($result) {
+        // Start building the select element with the Select2 class
+        echo '<select class="form-control" name="major" id="major" required>';
+    
+        // Iterate over the result set and populate the select options
+        while ($row = mysqli_fetch_assoc($result)) {
+            $major = $row['major'];
+            echo '<option value="' . $major . '">' . $major . '</option>';
+        }
+    
+        // Close the select element
+        echo '</select>';
+    
+        // Free the result set
+        mysqli_free_result($result);
+    } else {
+        // Handle the error if the query fails
+        echo 'Error: ' . mysqli_error($con);
+    }
+
+    // Close the database connection
+    mysqli_close($con);
+    ?>
+</div>
+
+
+
+              <br>
+              <style>
+                .nav-link:hover {
+                  color: rgb(7, 190, 135)
+                }
+              </style>
+             
+
+              <div class="form-label-group">
+                <label for="skills">Skills:</label>
+                <input class="form-control" type="text" name="skills" id="skills" required>
               </div>
               <div class="form-label-group">
-                <label for="Lname">studied at:</label>
-                <input class="form-control" type="text" name="Lname" id="Lname" >
+                <label for="experience">Work experience:</label>
+                <input class="form-control" type="text" name="experience" id="experience" required>
               </div>
-              <div class="form-label-group">
-                <label for="status">Status:</label>
-                <input class="form-control" type="radio" name="Status" value="student" id="student" required>
-                <label for="student">Student</label>
-                <input class="form-control" type="radio" name="employed" value="employed" id="employed">
-                <label for="employed">Employed</label>
-                <input class="form-control" type="radio" name="Status" value="self-employed" id="self-employed" required>
-                <label for="self-employed">Self-employed</label>
-                <input class="form-control" type="radio" name="Status" value="other" id="other" required>
-                <label for="other">Other</label>               
-              </div>
-              <div class="form-label-group">
-                <label for="location">Certefications:</label>
-                <input class="form-control" type="text" name="location" id="location" required>
-              </div>
-              <div class="form-label-group">
-                <label for="dob">Skills:</label>
-                <input class="form-control" type="date" name="dob" id="dob" required>
-              </div>
-              <div class="form-label-group">
-                <label for="dob">Work experience:</label>
-                <input class="form-control" type="date" name="dob" id="dob" required>
-              </div>
+
               <br>
               <style>
                 .nav-link:hover {
@@ -139,12 +178,26 @@ if (!isset($_SESSION['EMAIL'])) {
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
   <script>
     $(document).ready(function() {
       $('.animate-paragraph').addClass('animate');
     });
   </script>
+
+<script>
+    $(document).ready(function() {
+      $('#degree').select2();
+    });
+  </script>
+
+<script>
+    $(document).ready(function() {
+      $('#major').select2();
+    });
+  </script>
+
 
 </body>
 
