@@ -96,7 +96,7 @@ include 'connection.php';
 
 <!-- Fill profile form start-->
 
-        <div class="card card-signin my-5" style="background-color: rgba(172, 168, 168, 0.082);">
+        <div class="card card-signin my-5s" style="background-color: rgba(172, 168, 168, 0.082);">
           <div class="card-body">
             <h5 class="card-title text-center" style="color: rgb(98, 107, 104);">personal information</h5>
             <form class="form-signin" method="post" action="profileauthentication.php">
@@ -104,6 +104,18 @@ include 'connection.php';
                 <label for="name">Name:</label>
                 <input class="form-control" type="text" name="name" id="name" required>
               </div>
+              <script>
+  var nameInput = document.getElementById('name');
+  var nameLabel = document.getElementById('nameLabel');
+
+  nameInput.addEventListener('input', function() {
+    if (nameInput.value.length > 0) {
+      nameLabel.style.display = 'none';
+    } else {
+      nameLabel.style.display = 'block';
+    }
+  });
+</script>
               <div class="form-label-group">
                 <label for="Lname">Last Name:</label>
                 <input class="form-control" type="text" name="Lname" id="Lname" required>
@@ -122,6 +134,7 @@ include 'connection.php';
                 <label for="dob">Date of Birth:</label>
                 <input class="form-control" type="date" name="dob" id="dob" required>
               </div>
+              
 <!-- show countries -->
 
 
@@ -205,6 +218,7 @@ $(document).ready(function() {
       $('#location').select2();
     });
   </script>
+
 
 </body>
 
