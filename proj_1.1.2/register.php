@@ -74,6 +74,12 @@
 
           <!-- Begin form--> 
          <form class="form-signin" method="post" action="insert.php">
+
+         <div class="form-label-group">
+             <input name="Uname" type="text" id="Uname" class="form-control" placeholder="Uname" required >
+             <label for="Uname">User name</label>
+           </div>
+
            <div class="form-label-group">
              <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
              <label for="inputEmail">Email address</label>

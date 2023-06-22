@@ -11,7 +11,8 @@ if (isset($_POST['email']) && isset($_POST['password'])  ){
 
     if(empty($row1)){
 
-    $qry = "INSERT INTO `users`( `email`, `password`,`user_type`) VALUES ('".$_POST['email']."','".$_POST['password']."','user')";
+        $qry = "INSERT INTO `users` (`email`, `password`, `user_type`, `username`) VALUES ('".$_POST['email']."', '".$_POST['password']."', 'user', '".$_POST['Uname']."')";
+
     mysqli_query($con , $qry);
 
 

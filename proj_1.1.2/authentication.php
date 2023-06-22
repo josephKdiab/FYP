@@ -8,8 +8,10 @@ if (isset($_POST['loginemail']) && isset($_POST['loginpass'])) {
     $email = $_POST['loginemail'];
     $password = $_POST['loginpass'];
 
+
     $email = htmlspecialchars($email);
     $password = htmlspecialchars($password);
+
 
     $query = "SELECT * FROM users WHERE email='" . $email . "' AND password='" . $password . "'";
 
