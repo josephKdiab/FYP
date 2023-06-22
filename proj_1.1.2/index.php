@@ -1,3 +1,21 @@
+
+<?php
+session_start();
+if (!isset($_SESSION['EMAIL'])) {
+  header("Location: signin.php");
+}
+
+include 'connection.php';
+
+$query = "SELECT * FROM `individual_profile` WHERE `EMAIL`='" . $_SESSION['EMAIL'] . "'";
+$res=mysqli_query($con,$query);
+$row=mysqli_fetch_array($res);
+
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,27 +48,12 @@
   <link rel="stylesheet" href="css/owl.carousel.min.css">
   <link rel="stylesheet" href="css/owl.theme.default.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
-  <style>
-    .profile-panel {
-      position: absolute;
-      top: 160px;
-      left: 65px;
-      width: 100px;
-      height: 100px;
-      border-radius: 60%;
-      overflow: hidden;
-      background-color: rgb(98, 107, 104); /* Set your desired background color here */
-    }
-
-    .profile-image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-  </style>
+  
 </head>
 
 <body>
+
+
   <!-- header section start-->
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="logo" href="#"><img src="images/logo.png"></a>
@@ -76,16 +79,65 @@
   </nav>
   <!-- header section start end-->
 
+
+
   <!-- profile pic display -->
+  <style>
+  .profile-container {
+    position: absolute;
+    top: 160px;
+    left: 40px;
+  }
+
+  .profile-panel {
+    width: 250px; /* Increase the width of the panel */
+    height: 500px; /* Increase the height of the panel */
+    border-radius: 20px;
+    overflow: hidden;
+    background-color: #f2f2f2; /* Set a lighter color for the background */
+    display: flex;
+    flex-direction: column; /* Align items vertically */
+    justify-content: flex-start; /* Align items to the top */
+    align-items: center;
+  }
+
+  .profile-image {
+    width: 140px; /* Keep the original width of the profile picture */
+    height: 140px; /* Keep the original height of the profile picture */
+    object-fit: cover;
+    margin-top: px; /* Add some top margin to center the image */
+    border-radius: 50%; /* Make the image circular */
+  }
+
+  .profile-name {
+    margin-top: 20px; /* Add some top margin to lower the name */
+  }
+</style>
+
+<div class="profile-container">
   <div class="profile-panel">
+    <h3 class="profile-name"><?php echo $row['Name'] . " " . $row['last_name']; ?></h3>
     <?php
-    $profilePicPath = 'profile_pic/profile.jpg';
+   
     ?>
-    <img class="profile-image" src="<?php echo $profilePicPath; ?>" alt="Profile Picture">
+    <img class="profile-image" src="profile_pic\<?php echo $row['picture']; ?>"  alt="Profile Picture">
+    
+    <!-- Input field for uploading picture -->
+    <label for="profile-picture" class="file-label" style="color: blue;">Add Picture</label>
+
+    
+    <input type="file" name="profile-picture" id="profile-picture" accept="image/*" style="display: none;">
   </div>
+</div>
+
+
+
+
+
   <!-- profile pic display end -->
 
   <!-- Add post and upload image panel -->
+  <br>
   <div class="container mt-5">
     <div class="row">
       <div class="col-md-7 offset-md-2">
@@ -111,7 +163,7 @@
   </div>
 
   <!-- Separator line -->
-  <hr style="width: 45%; margin: 30px 370px; border-width: 2px;">
+  <!--<hr style="width: 45%; margin: 30px 370px; border-width: 2px;">-->
 
   <!-- Display posts -->
   <div class="container mt-5">
