@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <!-- basic -->
   <meta charset="utf-8">
@@ -27,9 +28,28 @@
   <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
   <!-- owl stylesheets -->
   <link rel="stylesheet" href="css/owl.carousel.min.css">
-  <link rel="stylesoeet" href="css/owl.theme.default.min.css">
+  <link rel="stylesheet" href="css/owl.theme.default.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+  <style>
+    .profile-panel {
+      position: absolute;
+      top: 160px;
+      left: 65px;
+      width: 100px;
+      height: 100px;
+      border-radius: 60%;
+      overflow: hidden;
+      background-color: rgb(98, 107, 104); /* Set your desired background color here */
+    }
+
+    .profile-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
 </head>
+
 <body>
   <!-- header section start-->
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -54,12 +74,21 @@
       </ul>
     </div>
   </nav>
-  <!-- header section start-->
+  <!-- header section start end-->
+
+  <!-- profile pic display -->
+  <div class="profile-panel">
+    <?php
+    $profilePicPath = 'profile_pic/profile.jpg';
+    ?>
+    <img class="profile-image" src="<?php echo $profilePicPath; ?>" alt="Profile Picture">
+  </div>
+  <!-- profile pic display end -->
 
   <!-- Add post and upload image panel -->
-  <div class="container">
+  <div class="container mt-5">
     <div class="row">
-      <div class="col-md-7 offset-md-2 mt-5">
+      <div class="col-md-7 offset-md-2">
         <div class="card">
           <div class="card-body">
             <form method="POST" action="post_process.php" enctype="multipart/form-data">
@@ -81,10 +110,13 @@
     </div>
   </div>
 
+  <!-- Separator line -->
+  <hr style="width: 45%; margin: 30px 370px; border-width: 2px;">
+
   <!-- Display posts -->
-  <div class="container">
+  <div class="container mt-5">
     <div class="row">
-      <div class="col-md-7 offset-md-2 mt-5">
+      <div class="col-md-7 offset-md-2">
         <?php
         include 'connection.php';
 
@@ -95,20 +127,27 @@
         if (mysqli_num_rows($result) > 0) {
           // Loop through each row and display the posts
           while ($row = mysqli_fetch_assoc($result)) {
+            echo('<br><br>');
+
+            $query2 = "SELECT `Name`, `last_name` FROM `individual_profile` WHERE `user_id` = '" . $row['user_id'] . "'";
+            $res2 = mysqli_query($con, $query2);
+            $row5 = mysqli_fetch_array($res2);
             ?>
             <div class="card mt-3">
-              <div class="card-header">
-                <h5>User ID: <?php echo $row['user_id']; ?></h5>
-                <span class="date"><?php echo $row['time']; ?></span>
+              <div class="card-header" style="height:70px">
+                <h5> <?php echo $row5['Name'] . " " . $row5['last_name']; ?></h5>
+                <span style="" class="date"><?php echo $row['time']; ?></span>
               </div>
               <div class="card-body">
                 <p><?php echo $row['text']; ?></p>
                 <?php if (!empty($row['photo'])) { ?>
-                  <img src="uploads/<?php echo $row['photo']; ?>" alt="Post Image">
+                  <img class="form-control" src="uploads/<?php echo $row['photo']; ?>" alt="Post Image">
                 <?php } ?>
               </div>
             </div>
             <?php
+            echo('<br><br>');
+            echo('<hr style="width: 120%; margin: 30px -70px; border-width: 2px;">');
           }
         } else {
           echo "No posts found.";
@@ -127,4 +166,5 @@
   <!-- custom js -->
   <script src="js/custom.js"></script>
 </body>
+
 </html>
