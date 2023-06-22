@@ -55,7 +55,7 @@ if (isset($_FILES['pp'])) {
                 header("Location: ../../index.php?error=$em");
                 exit;
             }
-        } else {
+        } else {    
             $em = "You can't upload files of this type";
             header("Location: ../../index.php?error=$em");
             exit;
