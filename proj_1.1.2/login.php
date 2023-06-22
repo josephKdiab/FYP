@@ -67,7 +67,7 @@
             
          <!-- Form login start--> 
 
-         <form class="form-signin" action ="authentication.php" method="POST">
+         <form class="form-signin" action ="php-chat-app-main\app\http\auth.php" method="POST">
            <div class="form-label-group"> 
              <input name="loginemail" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
              <label for="inputEmail">Email address</label>

@@ -7,7 +7,7 @@ if (!isset($_SESSION['EMAIL'])) {
 
 include 'connection.php';
 
-$query = "SELECT * FROM `individual_profile` WHERE `EMAIL`='" . $_SESSION['EMAIL'] . "'";
+$query = "SELECT * FROM `individual_profile` WHERE `Email`='" . $_SESSION['EMAIL'] . "'";
 $res=mysqli_query($con,$query);
 $row=mysqli_fetch_array($res);
 
@@ -69,7 +69,7 @@ $row=mysqli_fetch_array($res);
           <a class="nav-link" href="recurments.html">JOBS</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="recurments.html">PROFILE</a>
+          <a href="myProfile.php" class="nav-link" >PROFILE</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="services.html">Settings</a>
@@ -112,26 +112,83 @@ $row=mysqli_fetch_array($res);
   .profile-name {
     margin-top: 20px; /* Add some top margin to lower the name */
   }
+  
+  .image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px; /* Add top margin to create space between the image and label */
+  }
+
+  .file-label {
+    color: #87CEFA;
+  }
+
+  .circular-profile-pic {
+  width: 50px; /* Set the desired width */
+  height: 50px; /* Set the desired height */
+  border-radius: 50%;
+}
+
+  .profile-picture {
+    position: absolute;
+    top: 4px;
+    left: 10px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  .profile-picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .card-header {
+    position: relative;
+    padding-left: 60px; /* Adjust the value as needed */
+  }
+  
+  .post-info {
+    margin-left: 20px; /* Adjust the value as needed */
+  }
+
+  .bg-light {
+ background-color: #f2f2f2;
+}
+.image-container {
+  text-align: center;
+}
+
 </style>
+
+
+
 
 <div class="profile-container">
   <div class="profile-panel">
     <h3 class="profile-name"><?php echo $row['Name'] . " " . $row['last_name']; ?></h3>
     <?php
-   
     ?>
-    <img class="profile-image" src="profile_pic\<?php echo $row['picture']; ?>"  alt="Profile Picture">
-    
-    <!-- Input field for uploading picture -->
-    <label for="profile-picture" class="file-label" style="color: blue;">Add Picture</label>
+    <div class="image-container">
+      <img class="profile-image" src="profile_pic\<?php echo $row['picture']; ?>" alt="Profile Picture">
+      
+      <!-- Input field for uploading picture -->
+      <form method="POST" action="profilePIC.php" enctype="multipart/form-data">
+        <br>
+        <label for="pp" class="file-label">Change picture</label>
+        <input type="file" name="pp" id="pp" accept="image/*" style="display: none;">
+        <br>
+        <button type="submit"   name="submit" class="edit-button" style="color:  #87CEFA;;">Edit</button> 
 
-    
-    <input type="file" name="profile-picture" id="profile-picture" accept="image/*" style="display: none;">
+      </form>
+    </div>
   </div>
+ </div>
 </div>
-
-
-
+</div>
 
 
   <!-- profile pic display end -->
@@ -139,28 +196,30 @@ $row=mysqli_fetch_array($res);
   <!-- Add post and upload image panel -->
   <br>
   <div class="container mt-5">
-    <div class="row">
-      <div class="col-md-7 offset-md-2">
-        <div class="card">
-          <div class="card-body">
-            <form method="POST" action="post_process.php" enctype="multipart/form-data">
-              <div class="form-group">
-                <label for="post">Add a Post</label>
-                <textarea name="post" class="form-control" id="post" rows="3" required></textarea>
+  <div class="row">
+    <div class="col-md-7 offset-md-2">
+      <div class="card bg-light">
+        <div class="card-body">
+          <form method="POST" action="post_process.php" enctype="multipart/form-data">
+            <div class="form-group">
+              <label for="post">Add a caption/text</label>
+              <textarea name="post" class="form-control" id="post" rows="3" required></textarea>
+            </div>
+            <div class="form-group">
+              <div class="custom-file">
+                <input name="pp" type="file" class="custom-file-input" id="pp">
+                <label class="custom-file-label" for="pp">Post a photo</label>
               </div>
-              <div class="form-group">
-                <div class="custom-file">
-                  <input name="pp" type="file" class="custom-file-input" id="pp">
-                  <label class="custom-file-label" for="pp">Choose file</label>
-                </div>
-              </div>
-              <button class="btn btn-lg btn-primary text-uppercase" type="submit" style="background-color: rgb(7, 190, 135); position: absolute; bottom: 2px; left: 510px; width: 120px; padding: 0px 0px; border-radius: 20px; color: #fff; font-weight: bold; border: none; cursor: pointer;">Submit</button>
-            </form>
-          </div>
+            </div>
+            <button class="btn btn-lg btn-primary text-uppercase" type="submit" style="background-color: #87CEFA; margin: 0 auto; display: block; width: 80px; padding: 0px; border-radius: 15px; color: black  ; border: none; cursor: pointer; font-size: 14px;">Post</button>
+
         </div>
       </div>
     </div>
   </div>
+</div>
+
+
 
   <!-- Separator line -->
   <!--<hr style="width: 45%; margin: 30px 370px; border-width: 2px;">-->
@@ -178,29 +237,37 @@ $row=mysqli_fetch_array($res);
         // Check if there are any posts
         if (mysqli_num_rows($result) > 0) {
           // Loop through each row and display the posts
-          while ($row = mysqli_fetch_assoc($result)) {
-            echo('<br><br>');
+         while ($row = mysqli_fetch_assoc($result)) {
+    echo('<br><br>');
+    
+    $query2 = "SELECT `Name`, `last_name`,`picture` FROM `individual_profile` WHERE `user_id` = '" . $row['user_id'] . "'";
+    $res2 = mysqli_query($con, $query2);
+    $row5 = mysqli_fetch_array($res2);
+    ?>
+<div class="card mt-3">
+  <div class="card-header" style="height:70px">
+    <div class="profile-picture">
+      <img class="circular-profile-pic" src="profile_pic/<?php echo $row5['picture']; ?>" alt="Profile Picture">
+    </div>
+    <div class="post-info">
+      <h5><?php echo $row5['Name'] . " " . $row5['last_name']; ?></h5>
+      <span class="date"><?php echo $row['time']; ?></span>
+    </div>
+  </div>
+  <div class="card-body">
+    <p><?php echo $row['text']; ?></p>
+    <?php if (!empty($row['photo'])) { ?>
+      <img class="form-control" src="uploads/<?php echo $row['photo']; ?>" alt="Post Image">
+    <?php } ?>
+  </div>
+</div>
 
-            $query2 = "SELECT `Name`, `last_name` FROM `individual_profile` WHERE `user_id` = '" . $row['user_id'] . "'";
-            $res2 = mysqli_query($con, $query2);
-            $row5 = mysqli_fetch_array($res2);
-            ?>
-            <div class="card mt-3">
-              <div class="card-header" style="height:70px">
-                <h5> <?php echo $row5['Name'] . " " . $row5['last_name']; ?></h5>
-                <span style="" class="date"><?php echo $row['time']; ?></span>
-              </div>
-              <div class="card-body">
-                <p><?php echo $row['text']; ?></p>
-                <?php if (!empty($row['photo'])) { ?>
-                  <img class="form-control" src="uploads/<?php echo $row['photo']; ?>" alt="Post Image">
-                <?php } ?>
-              </div>
-            </div>
-            <?php
-            echo('<br><br>');
-            echo('<hr style="width: 120%; margin: 30px -70px; border-width: 2px;">');
-          }
+
+    <?php
+    echo('<br><br>');
+    echo('<hr style="width: 120%; margin: 30px -70px; border-width: 2px;">');
+}
+
         } else {
           echo "No posts found.";
         }

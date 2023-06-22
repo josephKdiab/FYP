@@ -36,7 +36,7 @@ if (isset($_POST['loginemail']) && isset($_POST['loginpass'])) {
             
         }else{
 
-        header("Location: index.php");
+         header("Location:index.php");
         }
     }
 } else {
