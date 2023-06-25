@@ -1,8 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION['EMAIL'])) {
-  header("Location: signin.php");
-}
+
 
 include 'connection.php';
 ?>

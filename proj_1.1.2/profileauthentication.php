@@ -1,10 +1,6 @@
 <?php
 session_start();
 $emailp=$_SESSION['EMAIL'];
-if(!isset($_SESSION['EMAIL'])){
-    header("Location:signin.php");
-
-}else {
     
     include 'connection.php';
     if($_POST['name']  && $_POST['location'] && $_POST['gender'] && $_POST['dob'] ){
@@ -39,12 +35,7 @@ if(!isset($_SESSION['EMAIL'])){
       }
 
     
-    }
-    
 }
+
+
 ?>
-
-
-
-
-

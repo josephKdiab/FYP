@@ -3,7 +3,7 @@ session_start();
 $email=$_SESSION['EMAIL'];
 
 if(!isset($_SESSION['EMAIL'])){
-    header("Location:signin.php");
+    header("Location:index.php");
 
 }else {
 
@@ -30,7 +30,7 @@ if(!isset($_SESSION['EMAIL'])){
     
             if (in_array($img_ex_lc, $allowed_exs)) {
                 $new_img_name = $id . '.' . $img_ex_lc;
-                $img_upload_path = 'D:\Users\Joseph\Desktop\FYP\proj_1.1.2\profile_pic/' . $new_img_name;
+                $img_upload_path = 'D:\Users\Joseph\Desktop\FYP\proj_1.1.2/profile_pic/' . $new_img_name;
                 move_uploaded_file($tmp_name, $img_upload_path);
     
                 // Update the photo column in the post table
@@ -39,17 +39,17 @@ if(!isset($_SESSION['EMAIL'])){
     
                 if (!$res1) {
                     $em = "An error occurred while updating the profile picture";
-                    header("Location: ../../index.php?error=$em");
+                    header("Location: ../../index2.php?error=$em");
                     exit;
                 }
             } else {    
                 $em = "You can't upload files of this type";
-                header("Location: ../../index.php?error=$em");
+                header("Location: ../../index2.php?error=$em");
                 exit;
             }
         } else {
             $em = "Error occurred while uploading the file";
-            header("Location: ../../index.php?error=$em");
+            header("Location: ../../index2.php?error=$em");
             exit;
         }
     }
@@ -57,9 +57,8 @@ if(!isset($_SESSION['EMAIL'])){
         header("Location:myProfile.php");
     }
     else{
-        header("Location:index.php");
+        header("Location:index2.php");
     }
-    exit;
+  exit;
 }
-    ?>
-
+?>
