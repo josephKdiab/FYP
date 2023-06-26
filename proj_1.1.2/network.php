@@ -78,7 +78,7 @@ $row = mysqli_fetch_array($res);
 <body>
   <!-- Header Section -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="logo" href="index.php"><img ahref="index.php" src="images/logo.png"></a>
+    <a class="logo" href="index2.php"><img ahref="index2.php" src="images/logo.png"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -211,22 +211,19 @@ $row = mysqli_fetch_array($res);
                 echo '<td><a href="myProfile.php?Email=' . $row3['Email'] . '">' . $row3['Name'] . '</a></td>';
                 echo '<td>' . $row3['last_name'] . '</td>';
                 echo '<td><img class="profile-image" src="profile_pic/' . $row3['picture'] . '" alt="Profile Picture"></td>';
+            
                 $query6 = "SELECT * FROM `friendrequest` WHERE ((`receiver_id` = " . $row['user_id'] . " AND `sender_id` = " . $row3['user_id'] . ") OR (`receiver_id` = " . $row3['user_id'] . " AND `sender_id` = " . $row['user_id'] . ")) AND `status` = 'accepted'";
-
                 $res6 = mysqli_query($con, $query6);
                 $isFriend = mysqli_num_rows($res6) > 0;
+                echo '<td>';
                 if ($isFriend) {
-                echo '<td><img class="green-tick" src="profile_pic/green_tick.png" alt="Profile Picture"></td>';
+                    echo '<img class="green-tick" src="profile_pic/green_tick.png" alt="Profile Picture">';
                 }
+                echo '</td>';
+            
                 echo '</tr>';
-                }
-                echo '</tbody>';
-                echo '</table>';
-                echo '</div>';
-        } else {
-            echo '<p>No results found.</p>';
-        }
-    }
+            }
+        }}
     ?>
 
   </div>
