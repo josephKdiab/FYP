@@ -158,14 +158,12 @@ $row = mysqli_fetch_array($res);
 }
 
 
+  
     .rounded-select {
-        border-radius: 5px;
-        padding: 5px;
-        background-color: #f2f2f2;
-        border: 1px solid #ccc;
-        font-size: 14px;
-        width: 200px;
-    }
+  border-radius: 20px;
+  padding: 5px;
+}
+
 
 
   </style>
@@ -190,9 +188,6 @@ $row = mysqli_fetch_array($res);
         </li>
         <li class="nav-item">
           <a class="nav-link" href="jobs.php">JOBS</a>
-        </li>
-        <li class="nav-item">
-          <a href="myProfile.php" class="nav-link">PROFILE</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="services.html">SETTINGS</a>
@@ -239,7 +234,7 @@ $row = mysqli_fetch_array($res);
 $res = mysqli_query($con, $query);
 $row = mysqli_fetch_array($res);
 
-$query5 = "SELECT * FROM `friendrequest` WHERE `receiver_id` = " . $row['user_id'] . " AND `status` = 'accepted'";
+$query5 = "SELECT * FROM `friendrequest` WHERE (`receiver_id` = " . $row['user_id'] . " OR `sender_id` = " . $row['user_id'] . ") AND `status` = 'accepted'";
 $res5 = mysqli_query($con, $query5);
 $row5 = mysqli_fetch_all($res5, MYSQLI_ASSOC);
 $friends = mysqli_num_rows($res5);
@@ -257,10 +252,10 @@ $friends = mysqli_num_rows($res5);
               if (!isset($_GET['Email']) || $_SESSION['EMAIL']==$_GET['Email']) {
                 echo('<form method="POST" action="profilePIC.php" enctype="multipart/form-data">
                 <br>                            
-                <label for="pp" class="file-label">Change picture</label>
+                <label for="pp" style="color: rgb(7, 190, 135); class="file-label">Change picture</label>
                 <input type="file" name="pp" id="pp" accept="image/*" style="display: none;">
                 <br >
-                <button type="submit" name="submitp" style="color: #87CEFA;padding-left: 5px;border-left-width: 0px;border-top-width: 00px;border-right-width: 0px;border-bottom-width: 0px;padding-left:35px">Edit</button>
+                <button type="submit" name="submitp"  style="color: rgb(7, 190, 135);padding-left: 5px;border-left-width: 0px;border-top-width: 00px;border-right-width: 0px;border-bottom-width: 0px;padding-left:35px">Apply</button>
               </form>');
               }
               ?>
@@ -298,19 +293,27 @@ $friends = mysqli_num_rows($res5);
                 echo"<br>";
                 echo "<a>" . $friends . " Friends" . "</a>";
                 echo("<br>");
-                  echo '<select  class="rounded-select">';
-                  echo '<option value=""></option>'; // Default option
-                  foreach ($row5 as $friend) {
-                      $friendQuery = "SELECT * FROM individual_profile WHERE user_id = " . $friend['sender_id'];
-                      $friendResult = mysqli_query($con, $friendQuery);
-                      $friendData = mysqli_fetch_assoc($friendResult);
-                  
-                      $profileLink = "myProfile.php?user_id=" . $friendData['Email'];
-                      echo '<option value="' . $friendData['user_id'] . '"><a href="' . $profileLink . '">' . $friendData['Name'] . ' ' . $friendData['last_name'] . '</a></option>';
-                  }
-                  echo '</select>';
-
+               
+                echo '<form action="myProfile.php" method="get">';
+                echo '<select name="Email" class="rounded-select">';
+                foreach ($row5 as $friend) {
+                    if ($friend['receiver_id'] == $row['user_id']) {
+                        $friendQuery = "SELECT * FROM individual_profile WHERE user_id = " . $friend['sender_id'];
+                    } else {
+                        $friendQuery = "SELECT * FROM individual_profile WHERE user_id = " . $friend['receiver_id'];
+                    }
+                    $friendResult = mysqli_query($con, $friendQuery);
+                    $friendData = mysqli_fetch_assoc($friendResult);
+                
+                    $profileLink = "myProfile.php?Email=" . $friendData['Email'];
+                    echo '<option value="' . $friendData['Email'] . '">' . $friendData['Name'] . ' ' . $friendData['last_name'] . '</option>';
+                }
+                echo '</select>';
+                echo '<a href="' . $profileLink . '" >Visit</a>';
+                echo '</form>';
                 ?>
+                
+                
 
             </div>
           </div>

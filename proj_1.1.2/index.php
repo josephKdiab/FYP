@@ -46,11 +46,9 @@
                 <a class="nav-link" href="general.php">Home</a>
              </li>
               <li class="nav-item">
-                <a class="nav-link" href="register.php">Sign up</a>
+                <a class="nav-link" href="signup.php">Sign up</a>
              </li>
-                <li class="nav-item">
-                   <a class="nav-link" href="#">About us</a>
-                </li>
+
 			
     
     </nav>
@@ -95,7 +93,7 @@
             </style>
           <div style="text-align: center;">
             
-            <a  class="nav-link" href="register.php">create account here</a>
+            <a  class="nav-link" href="signup.php">create account here</a>
           </div>
           <hr class="my-4">
 

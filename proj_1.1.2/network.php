@@ -48,8 +48,8 @@ $row = mysqli_fetch_array($res);
   <style>
 
   .profile-image {
-    width: 60px;
-    height: 60px;
+    width: 55px;
+    height: 55px;
     border-radius: 50%;
   }
 
@@ -68,6 +68,10 @@ $row = mysqli_fetch_array($res);
     .search-form .btn {
       padding: 8px 20px;
     }
+    .table th,
+  .table td {
+    padding: 0px; /* Adjust the padding value as needed */
+  }
   </style>
 </head>
 
@@ -103,26 +107,70 @@ $row = mysqli_fetch_array($res);
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-6">
-        <form class="search-form"  method="POST">
-          <h3>Filter by:</h3>
-          <input type="text" class="form-control" placeholder="Name" name="name">
-          <input type="text" class="form-control" placeholder="Last Name" name="last_name">
-          <input type="text" class="form-control" placeholder="Major" name="major">
-          <input type="text" class="form-control" placeholder="Location" name="location">
-          <input type="text" class="form-control" placeholder="Buy Degree" name="buy_degree">
-          <button class="btn btn-primary" name='search' type="submit">Search</button>
-        </form>
+      <form class="search-form" method="POST">
+  <h3>Filter by:</h3>
+  <input style="border-radius: 20px" type="text" class="form-control" placeholder="Name" name="name">
+  
+  
+  <input style="border-radius: 20px" type="text" class="form-control" placeholder="Last Name" name="last_name">
+ 
+   <!-- Filter by major -->
+  <select style="border-radius: 20px" class="form-control" name="major">
+    <option value="">All majors</option>
+    <?php
+    $query1 = "SELECT major FROM education";
+    $result1 = mysqli_query($con, $query1);
+    while ($row1 = mysqli_fetch_array($result1)) {
+      $major = $row1['major'];
+      echo "<option value='$major'>$major</option>";
+    }
+    ?>
+    </select>
+  
+  <!-- Filter by major end -->
+
+  <!-- Filter by location -->
+
+  <select style="border-radius: 20px" class="form-control" name="location">
+    <option value="">All Locations</option>
+    <?php
+    $query = "SELECT country FROM countries";
+    $result = mysqli_query($con, $query);
+    while ($row2 = mysqli_fetch_array($result)) {
+      $location = $row2['country'];
+      echo "<option value='$location'>$location</option>";
+    }
+    ?>
+    </select>
+
+    <!-- Filter by location end-->
+
+        <!-- Filter by degree -->
+        <label for="degree"></label>
+        <select style="border-radius: 20px" class="form-control" name="degree" id="degree" >
+        <option value="">Select Degree</option>
+        <option value="High School">High School</option>
+        <option value="Bachelor's Degree">Bachelor's Degree</option>
+        <option value="Master's Degree">Master's Degree</option>
+        <option value="PhD">PhD</option>
+        <option value="other">Other</option>
+        </select>
+<!-- Filter by degree end-->
+
+  <button class="btn btn-primary" style="background-color: rgb(7, 190, 135); border-radius: 20px;" name='search' type="submit">Search</button>
+</form>
+
       </div>
     </div>
-    <!-- Other search panels for additional parameters -->
-    <!-- Add similar code for other search parameters -->
+
 
     <?php
     if(isset($_POST['search'])){
         $name = $_POST['name'] ?? '';
         $lastName = $_POST['last_name'] ?? '';
         $location = $_POST['location'] ?? '';
-        $degree = $_POST['buy_degree'] ?? '';
+        $degree = $_POST['degree'] ?? '';
+        $degree=htmlspecialchars($degree);
         $major = $_POST['major'] ?? '';
 
         $query = "SELECT * FROM `individual_profile` WHERE 1=1";
@@ -143,28 +191,40 @@ $row = mysqli_fetch_array($res);
         }
 
         $res = mysqli_query($con, $query);
-
         if (mysqli_num_rows($res) > 0) {
-          echo '<table class="table">';
-          echo '<thead>';
-          echo '<tr>';
-          echo '<th>Name</th>';
-          echo '<th>Last Name</th>';
-          echo '<th>Profile Picture</th>';
-          echo '</tr>';
-          echo '</thead>';
-          echo '<tbody>';
-          while ($row = mysqli_fetch_array($res)) {
+            echo("<br><br><br><br>");
+            $counter = 1; // Initialize counter
+            echo '<div class="table-responsive">';
+            echo '<table class="table table-striped">';
+            echo '<thead>';
             echo '<tr>';
-            echo '<td><a href="myProfile.php?email=' . $row['Email'] . '">' . $row['Name'] . '</a></td>';
-            echo '<td>' . $row['last_name'] . '</td>';
-            echo '<td><img class="profile-image" src="profile_pic/' . $row['picture'] . '" alt="Profile Picture"></td>';
+            echo '<th>#</th>'; // Counter column
+            echo '<th>Name</th>';
+            echo '<th>Last Name</th>';
+            echo '<th>Profile Picture</th>';
             echo '</tr>';
-          }
-          echo '</tbody>';
-          echo '</table>';
+            echo '</thead>';
+            echo '<tbody>';
+            while ($row3 = mysqli_fetch_array($res)) {
+                echo '<tr>';
+                echo '<td>' . $counter++ . '</td>'; // Display counter value and increment it
+                echo '<td><a href="myProfile.php?Email=' . $row3['Email'] . '">' . $row3['Name'] . '</a></td>';
+                echo '<td>' . $row3['last_name'] . '</td>';
+                echo '<td><img class="profile-image" src="profile_pic/' . $row3['picture'] . '" alt="Profile Picture"></td>';
+                $query6 = "SELECT * FROM `friendrequest` WHERE ((`receiver_id` = " . $row['user_id'] . " AND `sender_id` = " . $row3['user_id'] . ") OR (`receiver_id` = " . $row3['user_id'] . " AND `sender_id` = " . $row['user_id'] . ")) AND `status` = 'accepted'";
+
+                $res6 = mysqli_query($con, $query6);
+                $isFriend = mysqli_num_rows($res6) > 0;
+                if ($isFriend) {
+                echo '<td><img class="green-tick" src="profile_pic/green_tick.png" alt="Profile Picture"></td>';
+                }
+                echo '</tr>';
+                }
+                echo '</tbody>';
+                echo '</table>';
+                echo '</div>';
         } else {
-          echo '<p>No results found.</p>';
+            echo '<p>No results found.</p>';
         }
     }
     ?>

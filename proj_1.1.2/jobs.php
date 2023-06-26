@@ -1,3 +1,16 @@
+<?php
+session_start();
+if (!isset($_SESSION['EMAIL'])) {
+  header("Location: index.php");
+}
+
+$email = $_SESSION['EMAIL'];
+include 'connection.php';
+$query = "SELECT * FROM `individual_profile` WHERE `Email`='" . $email . "'";
+$res = mysqli_query($con, $query);
+$row = mysqli_fetch_array($res);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -139,6 +152,11 @@
     padding: 8px;
     border-radius: 25px;
   }
+  .profile-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+  }
 </style>
 
 </head>
@@ -152,23 +170,26 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
-        <li class="nav-item">
-          <a style="padding-left:380px" ; class="nav-link" href="search jobs.html">NETWORK</a>
+      <li class="nav-item">
+          <a style="padding-left:380px" ; class="nav-link" href="index2.php">HOME</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="jobs.php">JOBS</a>
+          <a ; class="nav-link" href="network.php">NETWORK</a>
         </li>
         <li class="nav-item">
           <a href="myProfile.php" class="nav-link">PROFILE</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="services.html">Settings</a>
+          <a class="nav-link" href="services.html">SETTINGS</a>
         </li>
+        <div >
+          <img class="profile-image" src="profile_pic/<?php echo $row['picture']; ?>" alt="Profile Picture">
+        </div>
       </ul>
     </div>
   </nav>
   <!-- header section start end-->
-
+<br><br><br><br>
   <div class="container">
     <div class="panel-container">
       <div class="panel">
@@ -256,19 +277,36 @@
           <?php
           include 'connection.php';
 
-          if(isset($_POST['search-bar']) && isset($_POST['search'])){
-            $keyword = $_POST['search-bar'];
-            $query = "SELECT * FROM `job-post` WHERE title LIKE '%$keyword%' OR category LIKE '%$keyword%' OR location LIKE '%$keyword%'";
+          if (isset($_POST['search']) || isset($_POST['category-bar']) || isset($_POST['location-bar'])) {
+            // Build the SQL query with dynamic filters
+            $query = "SELECT * FROM `job-post` WHERE 1 = 1"; // Start with a dummy condition
+    
+            // Add filters based on the submitted form inputs
+            if (isset($_POST['search']) && !empty($_POST['search-bar'])) {
+                $searchTerm = $_POST['search-bar'];
+                $query .= " AND title LIKE '%$searchTerm%' OR category LIKE '%$searchTerm%' OR location LIKE '%$searchTerm%'";
+            }
+    
+            if (isset($_POST['category-bar']) && !empty($_POST['category-bar'])) {
+                $category = $_POST['category-bar'];
+                $query .= " AND category LIKE '%$category%'";
+            }
+    
+            if (isset($_POST['location-bar']) && !empty($_POST['location-bar'])) {
+                $location = $_POST['location-bar'];
+                $query .= " AND location LIKE '%$location%'";
+            }
             $res = mysqli_query($con , $query);
           
             echo '<div id="search-results">';
-            while ($row = mysqli_fetch_assoc($res)) {
+            while ($row = mysqli_fetch_array($res)) {
             $title = $row['title'];
             $description = $row['description'];
             $experience = $row['experience'];
             $location = $row['location'];
             $contactEmail = $row['contact-email'];
             $category = $row['category'];
+            $job_id = $row ['job_id'];
 
             echo '
               <div class="result-item">
@@ -278,7 +316,7 @@
                 <p><strong>Location:</strong> ' . $location . '</p>
                 <p><strong>Contact Email:</strong> ' . $contactEmail . '</p>
                 <p><strong>Category:</strong> ' . $category . '</p>
-                <a href="apply_job.php?email=' . $contactEmail . '">Apply</a>.
+                <a href="apply_job.php?email=' . $contactEmail . '&job_id=' . $job_id . '">Apply</a>.
               </div>';
 
           }
@@ -298,6 +336,67 @@
       </div>
     </div>
   </div>
+
+  <title>Jobs</title>
+    <style>
+        /* Your existing CSS styles for other elements */
+
+        /* CSS styles for the toast message */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-size: 16px;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        .toast.success {
+            background-color: #28a745;
+        }
+
+        .toast.error {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <!-- Your HTML code for jobs page -->
+
+    <?php
+    if (isset($_GET['message'])) {
+        $message = $_GET['message'];
+        $toastClass = isset($_SESSION['success_message']) ? 'success' : 'error';
+        unset($_SESSION['success_message']);
+        unset($_SESSION['error_message']);
+    }
+    ?>
+
+    <?php if (isset($message)) { ?>
+        <div class="toast <?php echo $toastClass; ?>">
+            <?php echo $message; ?>
+        </div>
+    <?php } ?>
+
+    <script>
+        // JavaScript code to show/hide the toast message
+        var toast = document.querySelector('.toast');
+        if (toast) {
+            toast.classList.add('show');
+            setTimeout(function() {
+                toast.classList.remove('show');
+            }, 3000); // Adjust the timeout value to control the duration of the toast message
+        }
+    </script>
 
   <!-- Javascript files -->
   <script src="js/jquery.min.js"></script>

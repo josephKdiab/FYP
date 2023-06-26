@@ -94,11 +94,11 @@ include 'connection.php';
 
 <!-- Fill profile form start-->
 
-        <div class="card card-signin my-5s" style="background-color: rgba(172, 168, 168, 0.082);">
+        <div  style="background-color: rgba(172, 168, 168, 0.082);">
           <div class="card-body">
             <h5 class="card-title text-center" style="color: rgb(98, 107, 104);">personal information</h5>
-            <form class="form-signin" method="post" action="profileauthentication.php">
-              <div class="form-label-group">
+            <form  method="post" action="profileauthentication.php">
+              <div >
                 <label for="name">Name:</label>
                 <input class="form-control" type="text" name="name" id="name" required>
               </div>
@@ -136,8 +136,8 @@ include 'connection.php';
 <!-- show countries -->
 
 
-<div class="form-label-group">
-    <label for="location">Location:</label>
+<div style="border-radius: 20px">
+    <label  for="location">Location:</label>
     <?php
     // Assuming you have established a database connection
 
