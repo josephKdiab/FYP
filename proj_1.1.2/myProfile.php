@@ -189,9 +189,7 @@ $row = mysqli_fetch_array($res);
         <li class="nav-item">
           <a class="nav-link" href="jobs.php">JOBS</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="services.html">SETTINGS</a>
-        </li>
+
       </ul>
     </div>
   </nav>
@@ -362,6 +360,14 @@ $friends = mysqli_num_rows($res5);
 
           $query = "SELECT * FROM `post` WHERE `user_id` = '" . $row['user_id'] . "' ORDER BY `time` DESC";
           $result = mysqli_query($con, $query);
+          $nbr_post=mysqli_num_rows($result);
+          if($nbr_post==1){
+
+         echo(" <h5> $nbr_post post founded </h5>" );
+          
+          }elseif($nbr_post>1){
+            echo(" <h5> $nbr_post posts founded </h5>" );
+          }
 
           // Check if there are any posts
           if (mysqli_num_rows($result) > 0) {

@@ -82,9 +82,7 @@ $row=mysqli_fetch_array($res);
         <li class="nav-item">
           <a href="myProfile.php" class="nav-link" >PROFILE</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="services.html">SETTINGS</a>
-        </li>
+
         <li class="nav-item">
           <a class="nav-link" href="logout1.php">LOGOUT</a>
         </li>

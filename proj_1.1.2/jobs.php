@@ -45,10 +45,7 @@ $row = mysqli_fetch_array($res);
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
 
   <style>
-    body {
-      margin: 0;
-      padding: 0;
-    }
+   
 
     .container {
       display: flex;
@@ -57,12 +54,7 @@ $row = mysqli_fetch_array($res);
       height: 100vh;
     }
 
-    .panel-container {
-      flex-basis: 45%;
-      margin: 0 2%;
-      background-color: #f2f2f2;
-    }
-
+  
     .panel {
       min-height: 500px;
       background-color: #f2f2f2;
@@ -75,6 +67,7 @@ $row = mysqli_fetch_array($res);
       display: flex;
       flex-direction: column;
       align-items: center;
+      
     }
 
     .form-container label {
@@ -108,7 +101,7 @@ $row = mysqli_fetch_array($res);
     /* Right panel styles */
     .panel-container-right {
       flex-basis: 45%;
-      margin: 0 2%;
+      margin: 10px 2%;
     }
 
     
@@ -116,10 +109,6 @@ $row = mysqli_fetch_array($res);
     background-color: #f5f5f5;
     padding: 20px;
     border-radius: 25px;
-  }
-
-  .panel-right {
-    /* Add any additional styles for the panel if needed */
   }
 
   .search-container {
@@ -157,89 +146,7 @@ $row = mysqli_fetch_array($res);
     height: 60px;
     border-radius: 50%;
   }
-</style>
 
-</head>
-
-<body>
-  <!-- header section start-->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="logo" href="index2.php"><img src="images/logo.png"></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-      <li class="nav-item">
-          <a style="padding-left:380px" ; class="nav-link" href="index2.php">HOME</a>
-        </li>
-        <li class="nav-item">
-          <a ; class="nav-link" href="network.php">NETWORK</a>
-        </li>
-        <li class="nav-item">
-          <a href="myProfile.php" class="nav-link">PROFILE</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="services.html">SETTINGS</a>
-        </li>
-        <div >
-          <img class="profile-image" src="profile_pic/<?php echo $row['picture']; ?>" alt="Profile Picture">
-        </div>
-      </ul>
-    </div>
-  </nav>
-  <!-- header section start end-->
-<br><br><br><br>
-  <div class="container">
-    <div class="panel-container">
-      <div class="panel">
-        <!-- Left panel content here -->
-        <h3 style="text-align: center;">ADD JOB</h3>
-        <form class="form-container" action="jobs_insert.php" method="POST">
-          <label for="title">Title:</label>
-          <input type="text" id="title" name="title">
-
-          <label for="category">Category:</label>
-          <input type="text" id="category" name="category">
-
-          <label for="description">Description:</label>
-          <input type="text" id="description" name="description">
-
-          <label for="location">Location:</label>
-          <input type="text" id="location" name="location">
-
-          <label for="location">Experience:</label>
-          <input type="text" id="location" name="experience">
-
-          <label for="location">Email to contact:</label>
-          <input type="text" id="location" name="email-to-contact">
-
-          <input type="submit" value="Submit" name="submit">
-        </form>
-      </div>
-    </div>
-
-    <div class="panel-container-right">
-      <div class="panel-right">
-        <!-- Right panel content here -->
-        <!-- start of search form -->
-          <form action="jobs.php" method="POST">
-        <div class="search-container">
-          Title:<input type="text" id="search-input" placeholder="Search" name ="search-bar">
-          <input type="submit" value="Search" name ="search">
-        </div>
-
-        <div class="search-container">
-          Prefered Category:<input type="text" id="search-input" placeholder="Category" name ="category-bar">
-        </div>
-
-        <div class="search-container">
-          Prefered Location:<input type="text" id="search-input" placeholder="Location" name ="location-bar">
-          
-        </div>
-          </form>
-          
-          <style>
   .result-item {
     border: 1px solid #ccc;
     padding: 10px;
@@ -270,79 +177,7 @@ $row = mysqli_fetch_array($res);
     cursor: pointer;
     font-size: 14px;
   }
-</style>
-
-
-
-          <?php
-          include 'connection.php';
-
-          if (isset($_POST['search']) || isset($_POST['category-bar']) || isset($_POST['location-bar'])) {
-            // Build the SQL query with dynamic filters
-            $query = "SELECT * FROM `job-post` WHERE 1 = 1"; // Start with a dummy condition
-    
-            // Add filters based on the submitted form inputs
-            if (isset($_POST['search']) && !empty($_POST['search-bar'])) {
-                $searchTerm = $_POST['search-bar'];
-                $query .= " AND title LIKE '%$searchTerm%' OR category LIKE '%$searchTerm%' OR location LIKE '%$searchTerm%'";
-            }
-    
-            if (isset($_POST['category-bar']) && !empty($_POST['category-bar'])) {
-                $category = $_POST['category-bar'];
-                $query .= " AND category LIKE '%$category%'";
-            }
-    
-            if (isset($_POST['location-bar']) && !empty($_POST['location-bar'])) {
-                $location = $_POST['location-bar'];
-                $query .= " AND location LIKE '%$location%'";
-            }
-            $res = mysqli_query($con , $query);
-          
-            echo '<div id="search-results">';
-            while ($row = mysqli_fetch_array($res)) {
-            $title = $row['title'];
-            $description = $row['description'];
-            $experience = $row['experience'];
-            $location = $row['location'];
-            $contactEmail = $row['contact-email'];
-            $category = $row['category'];
-            $job_id = $row ['job_id'];
-
-            echo '
-              <div class="result-item">
-                <h4 style="color:green">' . $title . '</h4>
-                <p><strong>Description:</strong> ' . $description . '</p>
-                <p><strong>Experience:</strong> ' . $experience . '</p>
-                <p><strong>Location:</strong> ' . $location . '</p>
-                <p><strong>Contact Email:</strong> ' . $contactEmail . '</p>
-                <p><strong>Category:</strong> ' . $category . '</p>
-                <a href="apply_job.php?email=' . $contactEmail . '&job_id=' . $job_id . '">Apply</a>.
-              </div>';
-
-          }
-              
-            echo '</div>';
-          }
-
-          
-
-          ?>
-</div>
-
-          <!-- end of search form -->
-        <div id="search-results">
-          <!-- Display search results here -->
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <title>Jobs</title>
-    <style>
-        /* Your existing CSS styles for other elements */
-
-        /* CSS styles for the toast message */
-        .toast {
+  .toast {
             position: fixed;
             bottom: 20px;
             left: 50%;
@@ -367,7 +202,362 @@ $row = mysqli_fetch_array($res);
         .toast.error {
             background-color: #dc3545;
         }
-    </style>
+        .add-job-panel {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .add-job-panel button {
+    border-radius: 20px;
+    padding: 10px 20px;
+    background-color: rgb(7, 190, 135);
+    color: white;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .submit-container {
+    text-align: center;
+  }
+
+  .submit-button {
+    background-color: rgb(7, 190, 135);
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+
+  .job-status-panel {
+  border-radius: 20px;
+  background-color: #f2f2f2;
+  width: 300px;
+  position: fixed;
+  top: 700px;
+  right: 1200px;
+  z-index: 9999;
+}
+
+
+.job-status-panel h3 {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+
+
+.job-status-panel .job-list-item:last-child {
+  border-bottom: none;
+}
+
+
+  .job-search-results th,
+  .job-search-results td {
+    border: 1px solid lightgray;
+    padding: 8px;
+  }
+
+  .job-search-results th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+  }
+
+  .job-search-results tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+</style>
+
+</head>
+
+<body>
+  <!-- header section start-->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="logo" href="index2.php"><img src="images/logo.png"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+      <li class="nav-item">
+          <a style="padding-left:380px" ; class="nav-link" href="index2.php">HOME</a>
+        </li>
+        <li class="nav-item">
+          <a ; class="nav-link" href="network.php">NETWORK</a>
+        </li>
+        <li class="nav-item">
+          <a href="myProfile.php" class="nav-link">PROFILE</a>
+        </li>
+
+        <div >
+          <img class="profile-image" src="profile_pic/<?php echo $row['picture']; ?>" alt="Profile Picture">
+        </div>
+      </ul>
+    </div>
+  </nav>
+  <!-- header section start end-->
+<br><br><br><br>
+<div class="container"    style="margin-right: 300px;
+    padding-left: 400px;">
+<div class="add-job-panel"style="padding-left: -200px;">
+  <button id="showPanelButton">Add Job Here</button>
+</div>
+  <div class="panel-container" style="display: none;">
+    <div class="panel">
+      
+      <h3 style="text-align: center;">ADD JOB</h3>
+      <form class="form-container" action="jobs_insert.php" method="POST">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required>
+
+        <label for="category">Category:</label>
+        <input type="text" id="category" name="category">
+
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description">
+
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location">
+
+        <label for="location">Experience:</label>
+        <input type="text" id="experience" name="experience">
+
+        <label for="location">Email to contact:</label>
+        <input type="text" id="email-to-contact" name="email-to-contact">
+
+        <input type="submit" value="Submit" name="submit">
+      </form>
+    </div>
+  </div>
+
+  <div class="panel-container-right">
+  <div class="panel-right">
+    <!-- Right panel content here -->
+    <form action="jobs.php" method="POST">
+      <div class="search-container">
+        Title:<input type="text" id="search-input" placeholder="Search" name="search-bar">
+      </div>
+      <div class="search-container">
+        Prefered Category:<input type="text" id="category-input" placeholder="Category" name="category-bar">
+      </div>
+      <div class="search-container">
+        Prefered Location:<input type="text" id="location-input" placeholder="Location" name="location-bar">
+      </div>
+      <div class="submit-container">
+        <input type="submit" value="Search" name="search" class="submit-button">
+        <input type="reset" value="Reset" class="submit-button" onclick="window.location.href='jobs.php'">
+      </div>
+    </form>
+  </div>
+</div>
+
+</div>
+</div>
+  <div style="display: flex; justify-content: center;margin-top:-300px ">
+  <div style="text-align: center;">
+  <?php
+  include 'connection.php';
+
+  if (isset($_POST['search']) || isset($_POST['category-bar']) || isset($_POST['location-bar'])) {
+    // Build the SQL query with dynamic filters
+    $query = "SELECT * FROM `job-post` WHERE 1 = 1"; // Start with a dummy condition
+
+    // Add filters based on the submitted form inputs
+    if (isset($_POST['search']) && !empty($_POST['search-bar'])) {
+      $searchTerm = $_POST['search-bar'];
+      $query .= " AND title LIKE '%$searchTerm%' OR category LIKE '%$searchTerm%' OR location LIKE '%$searchTerm%'";
+    }
+
+    if (isset($_POST['category-bar']) && !empty($_POST['category-bar'])) {
+      $category = $_POST['category-bar'];
+      $query .= " AND category LIKE '%$category%'";
+    }
+
+    if (isset($_POST['location-bar']) && !empty($_POST['location-bar'])) {
+      $location = $_POST['location-bar'];
+      $query .= " AND location LIKE '%$location%'";
+    }
+    $res = mysqli_query($con, $query);
+
+    if (isset($_POST['search'])) {
+      $counter = 1; // Initialize a counter variable
+    
+      echo '<table class="job-search-results">';
+      echo '<tr>
+              <th>Job #</th>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Experience</th>
+              <th>Location</th>
+              <th>Contact Email</th>
+              <th>Category</th>
+              <th>Action</th>
+            </tr>';
+    
+      while ($row1 = mysqli_fetch_array($res)) {
+        $title = $row1['title'];
+        $description = $row1['description'];
+        $experience = $row1['experience'];
+        $location = $row1['location'];
+        $contactEmail = $row1['contact-email'];
+        $category = $row1['category'];
+        $job_id = $row1['job_id'];
+    
+        echo '<tr>';
+        echo '<td>' . $counter . '</td>';
+        echo '<td>' . $title . '</td>';
+        echo '<td>' . $description . '</td>';
+        echo '<td>' . $experience . '</td>';
+        echo '<td>' . $location . '</td>';
+        echo '<td>' . $contactEmail . '</td>';
+        echo '<td>' . $category . '</td>';
+        echo '<td><a href="apply_job.php?email=' . $contactEmail . '&job_id=' . $job_id . '">Apply</a></td>';
+        echo '</tr>';
+    
+        $counter++; // Increment the counter
+      }
+    
+      echo '</table>';
+    }}
+    ?>
+</div>
+    </div>
+  </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $('#showPanelButton').click(function () {
+      $('.panel-container').toggle();
+    });
+  });
+</script>
+
+<script>
+  document.getElementById("showPanelButton").addEventListener("click", function() {
+  var searchResults = document.getElementById("search-results");
+  var addJobPanel = document.querySelector(".add-job-panel");
+  
+  if (addJobPanel.getBoundingClientRect().top > 0) {
+    searchResults.classList.add("thin-border");
+    searchResults.classList.remove("thick-border");
+  } else {
+    searchResults.classList.add("thick-border");
+    searchResults.classList.remove("thin-border");
+  }
+
+  searchResults.classList.toggle("pushed-down");
+});
+
+  </script>
+  
+  <div class="job-status-panel" style="margin-right: 0px; margin-top: -500px;">
+  <h3>Job Status</h3>
+  <div class="job-list">
+    <h6>Jobs Posted by me:</h6>
+    <div class="list-container">
+      <?php
+      include 'connection.php';
+
+      // Query to retrieve jobs applied by the user
+      $Email=$row['Email'];
+      $userId = $row['user_id'];
+      $query = "SELECT * FROM `job-post` WHERE `user_id` = '$userId'";
+      $result = mysqli_query($con, $query);
+
+      echo '<select id="applied-jobs" class="form-control">';
+    
+      while ($jobRow = mysqli_fetch_array($result)) {
+        $title = $jobRow['title'];
+        $jobID = $jobRow['job_id'];
+        echo '<option value="' . $jobID . '">' . $title . '</option>';
+      }
+      ?>
+   
+    </select>
+    <button id="goButton">Check</button>
+
+    
+    <script>
+      var jobSpinner = document.getElementById('applied-jobs');
+      var goButton = document.getElementById('goButton');
+    
+      goButton.addEventListener('click', function() {
+        var selectedJobID = jobSpinner.value;
+        window.location.href = 'check.php?jobID=' + selectedJobID;
+      });
+    </script>
+    
+  
+
+  </div>
+  <div class="job-list">
+  <h6>Jobs Applied Title:</h6>
+  <div class="list-container">
+    <?php
+    $query = "SELECT * FROM `applications` WHERE `applicant_email` = '$email'";
+    $result = mysqli_query($con, $query);
+    echo '<select id="applied-jobs1" class="form-control">';
+  
+    while ($jobRow = mysqli_fetch_array($result)) {
+      $id = $jobRow['job_id'];
+      $query ="SELECT * FROM `job-post` WHERE `job_id`='$id' ";
+      $res=mysqli_query($con,$query);
+      $row=mysqli_fetch_array($res); // Fetch the row data
+    
+      $title1 = $row['title'];
+      echo '<option value="' . $id . '">' . $title1. '</option>';
+    }
+    ?>
+  </select>
+  <button id="GoButton">Check</button>
+
+  <script>
+    var jobSpinner1 = document.getElementById('applied-jobs1');
+    var goButton = document.getElementById('GoButton');
+
+    goButton.addEventListener('click', function() {
+      var selectedJobID1 = jobSpinner1.value;
+      window.location.href = 'check.php?jobID=' + selectedJobID1;
+    });
+  </script>
+  </div>
+</div>
+
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('#applied-jobs').select2({
+      placeholder: 'Select a job',
+      allowClear: true
+    });
+  });
+</script>
+
+<style>
+  .list-container {
+    max-height: 150px;
+    overflow-y: auto;
+  }
+  
+  .check-link {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+  }
+</style>
+
+
+
+
+<title>Jobs</title>
 </head>
 <body>
     <!-- Your HTML code for jobs page -->
