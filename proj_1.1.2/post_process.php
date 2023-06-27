@@ -19,6 +19,7 @@ $new_img_name = ''; // Initialize the variable with an empty string
 
 if (isset($_POST['post'])) {
     $text = $_POST['post'];
+    $text=htmlspecialchars($text);
     $query2 = "INSERT INTO `post` (`user_id`, `text`, `time`, `photo`) VALUES ('".$id."', '".$text."', '".$currentTime."', '".$new_img_name."')";
     $res2 = mysqli_query($con, $query2);
 }

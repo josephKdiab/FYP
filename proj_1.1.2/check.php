@@ -191,7 +191,12 @@ $number = mysqli_num_rows($applicantResult);
         <td><?php echo $number; ?></td>
       </tr>
     </table>
-   
+    
+    <?php
+    if($userID==$jobRow['user_id']){
+      echo '<a href="cancel.php?jobID=' . $jobID . '" style="color: red;margin-left:155px">Delete Application</a>';
+    }
+    ?>
     <table class="applicant-table">
       <tr>
         <th>Applicant Name</th>

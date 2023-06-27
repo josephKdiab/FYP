@@ -19,6 +19,9 @@ $emailp=$_SESSION['EMAIL'];
         $query = "SELECT * FROM `individual_profile` WHERE `Email`='".$emailp."'";
         $res = mysqli_query($con , $query);
         $row = mysqli_fetch_array($res);
+
+       
+      
         
 
         if(($num_of_rows = mysqli_num_rows($res)) == 0){
@@ -26,6 +29,11 @@ $emailp=$_SESSION['EMAIL'];
         $query2 = "INSERT INTO `individual_profile` (`user_id`,`Name`, `Email`, `Location`, `Gender`, `Date-of-birth`, `last_name`,`picture`) VALUES ('".$id."','".$namep."','".$emailp."','".$locationp."','".$genderp."','".$dobp."','".$Lname."','profile.jpg')";
 
         $res2=mysqli_query($con , $query2);
+
+        $query3 = "INSERT INTO `friendrequest` (sender_id, receiver_id, status) VALUES (1, " . $id . ", 'accepted')";
+        $res3 = mysqli_query($con, $query3);
+        
+        
         header("Location:p_profile.php");
         }
            

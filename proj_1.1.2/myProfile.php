@@ -164,7 +164,11 @@ $row = mysqli_fetch_array($res);
   padding: 5px;
 }
 
-
+.light-green-link {
+  color: #00cc66; /* Light green color */
+  text-decoration: none;
+  border: none;
+}
 
   </style>
 <!--rgba(172, 168, 168, 0.082);-->
@@ -189,7 +193,9 @@ $row = mysqli_fetch_array($res);
         <li class="nav-item">
           <a class="nav-link" href="jobs.php">JOBS</a>
         </li>
-
+        <li class="nav-item">
+          <a class="nav-link" href="services.html">SETTINGS</a>
+        </li>
       </ul>
     </div>
   </nav>
@@ -293,6 +299,8 @@ $friends = mysqli_num_rows($res5);
                 echo("<br>");
                
                 echo '<form action="myProfile.php" method="get">';
+                echo '<form action="myProfile.php" method="GET">';
+                echo '<form action="myProfile.php" method="GET">';
                 echo '<select name="Email" class="rounded-select">';
                 foreach ($row5 as $friend) {
                     if ($friend['receiver_id'] == $row['user_id']) {
@@ -303,16 +311,13 @@ $friends = mysqli_num_rows($res5);
                     $friendResult = mysqli_query($con, $friendQuery);
                     $friendData = mysqli_fetch_assoc($friendResult);
                 
-                    $profileLink = "myProfile.php?Email=" . $friendData['Email'];
                     echo '<option value="' . $friendData['Email'] . '">' . $friendData['Name'] . ' ' . $friendData['last_name'] . '</option>';
                 }
                 echo '</select>';
-                echo '<a href="' . $profileLink . '" >Visit</a>';
+                
+                echo '<input type="submit" value="Visit" class="light-green-link">';
                 echo '</form>';
-                ?>
-                
-                
-
+?>                
             </div>
           </div>
 
@@ -360,14 +365,6 @@ $friends = mysqli_num_rows($res5);
 
           $query = "SELECT * FROM `post` WHERE `user_id` = '" . $row['user_id'] . "' ORDER BY `time` DESC";
           $result = mysqli_query($con, $query);
-          $nbr_post=mysqli_num_rows($result);
-          if($nbr_post==1){
-
-         echo(" <h5> $nbr_post post founded </h5>" );
-          
-          }elseif($nbr_post>1){
-            echo(" <h5> $nbr_post posts founded </h5>" );
-          }
 
           // Check if there are any posts
           if (mysqli_num_rows($result) > 0) {

@@ -337,8 +337,12 @@ $friendRequests = mysqli_fetch_all($res2, MYSQLI_ASSOC);
         <?php
         include 'connection.php';
 
-        $query = "SELECT * FROM `post` ORDER BY `time` DESC";
-        $result = mysqli_query($con, $query);
+        $query = "SELECT p.* FROM `post` p 
+        INNER JOIN `friendrequest` f ON (p.user_id = f.sender_id OR p.user_id = f.receiver_id)
+        WHERE (f.sender_id = '" . $row['user_id'] . "' OR f.receiver_id = '" . $row['user_id'] . "') 
+        AND f.status = 'accepted'
+        ORDER BY p.`time` DESC";
+      $result = mysqli_query($con, $query);
 
         // Check if there are any posts
         if (mysqli_num_rows($result) > 0) {

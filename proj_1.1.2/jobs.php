@@ -323,7 +323,7 @@ $row = mysqli_fetch_array($res);
         <label for="location">Experience:</label>
         <input type="text" id="experience" name="experience">
 
-        <label for="location">Email to contact:</label>
+        <label for="location">Contact:</label>
         <input type="text" id="email-to-contact" name="email-to-contact">
 
         <input type="submit" value="Submit" name="submit">
@@ -403,7 +403,12 @@ $row = mysqli_fetch_array($res);
         $contactEmail = $row1['contact-email'];
         $category = $row1['category'];
         $job_id = $row1['job_id'];
-    
+        
+        $query6 = "SELECT * FROM `applications` WHERE `job_id` = $job_id";
+        $res6 = mysqli_query($con, $query6);
+        $row6 = mysqli_fetch_array($res6);
+        
+
         echo '<tr>';
         echo '<td>' . $counter . '</td>';
         echo '<td>' . $title . '</td>';
@@ -412,7 +417,15 @@ $row = mysqli_fetch_array($res);
         echo '<td>' . $location . '</td>';
         echo '<td>' . $contactEmail . '</td>';
         echo '<td>' . $category . '</td>';
-        echo '<td><a href="apply_job.php?email=' . $contactEmail . '&job_id=' . $job_id . '">Apply</a></td>';
+        if($row['user_id']==$row1['user_id'] ){
+          echo '<td style="color: red;">mine</td>';
+        }elseif(mysqli_num_rows($res6)!=0 && $row6['applicant_email']==$_SESSION['EMAIL']){
+          echo '<td style="color: red;">applied</td>';
+
+        }else{
+         
+          echo '<td><a href="apply_job.php?email=' . $contactEmail . '&job_id=' . $job_id . '">Apply</a></td>';
+        }
         echo '</tr>';
     
         $counter++; // Increment the counter
